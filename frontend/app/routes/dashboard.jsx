@@ -77,7 +77,7 @@ export default function Dashboard() {
           headers: { Authorization: token },
         }
       );
-      setTickets((prevTickets) => [...prevTickets, data]); // Add new ticket to state
+      setTickets((prevTickets) => [...prevTickets, data.ticket]); // Add new ticket to state
       setIsModalOpen(false); // Close modal
       setSubject(""); // Reset form fields
       setDescription("");
@@ -94,7 +94,7 @@ export default function Dashboard() {
     setSelectedTicket(ticket);
     setEditSubject(ticket.subject);
     setEditDescription(ticket.description);
-    setAdminReply(ticket.description);
+    setAdminReply(ticket.adminReply);
     setEditModalActive(true);
   };
 
