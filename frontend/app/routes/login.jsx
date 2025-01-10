@@ -8,6 +8,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -20,7 +21,7 @@ export default function Login() {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(`http://localhost:5000/api/auth/login`, {
+      const response = await axios.post(`${apiUrl}/auth/login`, {
         username,
         password,
       });
