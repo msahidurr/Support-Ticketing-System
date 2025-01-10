@@ -4,14 +4,15 @@ const User = require('../models/User');
 // Create a new ticket
 exports.createTicket = async (req, res) => {
   const { subject, description } = req.body;
-  const customerId = req.user.id; // Assuming user ID is extracted from the JWT in middleware.
+  const customerId = req.user.id;
 
   try {
+    const adminUser = await User.findOne({ where: { role: 'Admin' } });
     const ticket = await Ticket.create({
       subject,
       description,
       customer_id: customerId,
-      admin_id: null, // Automatically assign to Admin (can be updated later)
+      admin_id: adminUser.id ?? null,
     });
 
     res.status(201).json({ message: 'Ticket created successfully', ticket });
@@ -39,7 +40,7 @@ exports.getAllTickets = async (req, res) => {
 
 // Get tickets for a specific customer
 exports.getCustomerTickets = async (req, res) => {
-  const customerId = req.user.id; // Assuming user ID is extracted from the JWT in middleware.
+  const customerId = req.user.id;
 
   try {
     const tickets = await Ticket.findAll({
@@ -80,7 +81,7 @@ exports.updateTicket = async (req, res) => {
 // Delete a ticket (Customer only)
 exports.deleteTicket = async (req, res) => {
   const { id } = req.params; // Ticket ID
-  const customerId = req.user.id; // Assuming user ID is extracted from the JWT in middleware.
+  const customerId = req.user.id;
 
   try {
     const ticket = await Ticket.findOne({ where: { id, customer_id: customerId } });
