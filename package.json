@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@shopify/polaris": "^13.9.2",
+    "@shopify/react-i18n": "^7.14.0"
+  }
+}
